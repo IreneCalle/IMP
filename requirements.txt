@@ -24,3 +24,6 @@ structlog>=23.1.0
 
 plotly>=5.18.0
 numpy>=1.24.3
+
+reportlab>=4.0.4
+Pillow>=10.0.0
