@@ -74,19 +74,27 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body>
-    <nav class="bg-white shadow-sm border-b border-gray-100">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="flex justify-between">
-                <div class="flex space-x-7">
-                    <div>
-                        <a href="/" class="flex items-center py-4 px-2">
-                            <span class="font-semibold text-blue-600 text-lg">Evaluación IMP</span>
-                        </a>
-                    </div>
+<nav class="bg-white shadow-sm border-b border-gray-100">
+    <div class="max-w-6xl mx-auto px-4">
+        <div class="flex justify-between">
+            <div class="flex space-x-7">
+                <div>
+                    <a href="/" class="flex items-center py-4 px-2">
+                        <span class="font-semibold text-blue-600 text-lg">IMP</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="/form" class="py-4 px-2 text-gray-600 hover:text-blue-600">
+                        Realizar Evaluación
+                    </a>
+                    <a href="/download_blank_form" class="py-4 px-2 text-gray-600 hover:text-blue-600">
+                        Descargar Plantilla
+                    </a>
                 </div>
             </div>
         </div>
-    </nav>
+    </div>
+</nav>
 
     <main class="container mx-auto px-4 py-8">
         {% block content %}{% endblock %}
