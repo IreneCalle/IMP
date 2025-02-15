@@ -26,15 +26,24 @@ def inject_year():
 class IMPError(Exception):
     pass
 
-@app.route('/')
-def index():
-    """Ruta principal que muestra el formulario de evaluación"""
+@app.route('/form')
+def evaluation_form():
+    """Ruta que muestra el formulario de evaluación"""
     try:
         return render_template(
-            'index.html',
+            'form.html',
             observed_items=[item for item_name, item in ALL_ITEMS.items() if item_name in OBSERVED_ITEMS],
             provoked_items=[item for item_name, item in ALL_ITEMS.items() if item_name in PROVOKED_ITEMS]
         )
+    except Exception as e:
+        logger.error(f"Error en la ruta del formulario: {str(e)}")
+        return jsonify({'error': 'Error interno del servidor'}), 500
+
+@app.route('/')
+def index():
+    """Ruta principal que muestra la página de inicio"""
+    try:
+        return render_template('index.html')
     except Exception as e:
         logger.error(f"Error en la ruta principal: {str(e)}")
         return jsonify({'error': 'Error interno del servidor'}), 500
