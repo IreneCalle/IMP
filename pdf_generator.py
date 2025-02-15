@@ -9,6 +9,10 @@ from typing import Dict, Any, List
 import io
 from datetime import datetime
 from config import OBSERVED_ITEMS, PROVOKED_ITEMS, ALL_ITEMS, TEST_SECTIONS
+from visualization import IMPVisualizer
+import logging
+
+logger = logging.getLogger('imp.pdf_generator')
 
 
 class IMPReportGenerator:
@@ -203,164 +207,203 @@ class IMPReportGenerator:
     def generate_results_report(self, data: Dict[str, Any], scores: Dict[str, int],
                                 interpretation: str, detailed_analysis: Dict[str, Any]) -> bytes:
         buffer = io.BytesIO()
-        doc = SimpleDocTemplate(
-            buffer,
-            pagesize=A4,
-            rightMargin=72,
-            leftMargin=72,
-            topMargin=72,
-            bottomMargin=72
-        )
+        try:
+            doc = SimpleDocTemplate(
+                buffer,
+                pagesize=A4,
+                rightMargin=72,
+                leftMargin=72,
+                topMargin=72,
+                bottomMargin=72
+            )
 
-        def add_header_footer(canvas, doc):
-            canvas.saveState()
-            canvas.setFont('Helvetica', 8)
-            canvas.setFillColor(colors.gray)
-            canvas.drawString(72, A4[1] - 40, "Evaluación del Rendimiento Motor Infantil (IMP)")
-            page_num = canvas.getPageNumber()
-            canvas.drawString(A4[0] - 85, 30, f"Página {page_num}")
-            canvas.restoreState()
+            def add_header_footer(canvas, doc):
+                canvas.saveState()
+                canvas.setFont('Helvetica', 8)
+                canvas.setFillColor(colors.gray)
+                canvas.drawString(72, A4[1] - 40, "Evaluación del Rendimiento Motor Infantil (IMP)")
+                page_num = canvas.getPageNumber()
+                canvas.drawString(A4[0] - 85, 30, f"Página {page_num}")
+                canvas.restoreState()
 
-        story = []
+            story = []
 
-        # Encabezado
-        self._create_header(story, "Informe de Resultados IMP")
-        self._create_basic_info_section(story, False, data)
 
-        # Puntuaciones por tipo de habilidad
-        story.append(Paragraph("Resultados por Tipo de Habilidad", self.subtitle_style))
 
-        type_scores = self._calculate_type_scores(data)
-        type_labels = {
-            'P': 'Rendimiento',
-            'V': 'Variedad',
-            'A': 'Adaptabilidad',
-            'S': 'Simetría',
-            'F': 'Fluidez'
-        }
+            # Encabezado
+            self._create_header(story, "Informe de Resultados IMP")
+            self._create_basic_info_section(story, False, data)
 
-        type_data = [["Habilidad", "Puntuación", "Porcentaje", "Puntuación máxima"]]
-        total_score = 0
-        total_max = 0
+            # Puntuaciones por tipo de habilidad
+            story.append(Paragraph("Resultados por Tipo de Habilidad", self.subtitle_style))
 
-        for type_key, label in type_labels.items():
-            score = type_scores[type_key]
-            total_score += score['total']
-            total_max += score['max']
+            type_scores = self._calculate_type_scores(data)
+            type_labels = {
+                'P': 'Rendimiento',
+                'V': 'Variedad',
+                'A': 'Adaptabilidad',
+                'S': 'Simetría',
+                'F': 'Fluidez'
+            }
+
+            type_data = [["Habilidad", "Puntuación", "Porcentaje", "Puntuación máxima"]]
+            total_score = 0
+            total_max = 0
+
+            for type_key, label in type_labels.items():
+                score = type_scores[type_key]
+                total_score += score['total']
+                total_max += score['max']
+                type_data.append([
+                    label,
+                    str(score['total']),
+                    f"{score['percentage']}%",
+                    str(score['max'])
+                ])
+
+            # Añadir total general
+            total_percentage = round((total_score / total_max * 100), 1) if total_max > 0 else 0
             type_data.append([
-                label,
-                str(score['total']),
-                f"{score['percentage']}%",
-                str(score['max'])
+                "TOTAL",
+                str(total_score),
+                f"{total_percentage}%",
+                str(total_max)
             ])
 
-        # Añadir total general
-        total_percentage = round((total_score / total_max * 100), 1) if total_max > 0 else 0
-        type_data.append([
-            "TOTAL",
-            str(total_score),
-            f"{total_percentage}%",
-            str(total_max)
-        ])
+            type_table = Table(type_data, colWidths=[2 * inch, 1.5 * inch, 1.5 * inch, 1.5 * inch])
+            type_table.setStyle(TableStyle([
+                ('GRID', (0, 0), (-1, -1), 0.5, colors.grey),
+                ('BACKGROUND', (0, 0), (-1, 0), colors.lightgrey),
+                ('BACKGROUND', (0, -1), (-1, -1), colors.lightgrey),
+                ('PADDING', (0, 0), (-1, -1), 6),
+                ('ALIGN', (1, 0), (-1, -1), 'CENTER'),
+                ('FONTWEIGHT', (0, -1), (-1, -1), 'BOLD'),
+            ]))
+            story.append(type_table)
+            story.append(Spacer(1, 20))
 
-        type_table = Table(type_data, colWidths=[2 * inch, 1.5 * inch, 1.5 * inch, 1.5 * inch])
-        type_table.setStyle(TableStyle([
-            ('GRID', (0, 0), (-1, -1), 0.5, colors.grey),
-            ('BACKGROUND', (0, 0), (-1, 0), colors.lightgrey),
-            ('BACKGROUND', (0, -1), (-1, -1), colors.lightgrey),
-            ('PADDING', (0, 0), (-1, -1), 6),
-            ('ALIGN', (1, 0), (-1, -1), 'CENTER'),
-            ('FONTWEIGHT', (0, -1), (-1, -1), 'BOLD'),
-        ]))
-        story.append(type_table)
-        story.append(Spacer(1, 20))
+            # Añadir visualizaciones
+            try:
+                logger.info("Iniciando generación de visualizaciones")
+                visualizer = IMPVisualizer()
 
-        # Resultados por Sección
-        story.append(Paragraph("Resultados por Sección", self.subtitle_style))
-        section_data = [["Sección", "Puntuación Total"]]
-        for section_name, section_info in TEST_SECTIONS.items():
-            section_score = sum(int(data.get(item_name, 0))
-                                for item_name, item_info in ALL_ITEMS.items()
-                                if item_info['section'] == section_name and item_name in data)
-            section_data.append([section_info['title'], str(section_score)])
+                # Gráfico de puntuaciones por tipo
+                story.append(Paragraph("Visualización de Puntuaciones por Tipo", self.subtitle_style))
+                type_chart = visualizer.create_type_scores_chart(type_scores)
+                story.append(type_chart)
 
-        section_table = Table(section_data, colWidths=[5 * inch, 1.5 * inch])
-        section_table.setStyle(TableStyle([
-            ('GRID', (0, 0), (-1, -1), 0.5, colors.grey),
-            ('BACKGROUND', (0, 0), (-1, 0), colors.lightgrey),
-            ('PADDING', (0, 0), (-1, -1), 6),
-            ('ALIGN', (-1, 0), (-1, -1), 'CENTER'),
-        ]))
-        story.append(section_table)
-        story.append(Spacer(1, 20))
+                # Gráfico de secciones
+                story.append(Spacer(1, 20))
+                story.append(Paragraph("Visualización de Puntuaciones por Sección", self.subtitle_style))
+                section_data = {section_info['title']: scores.get(section_name, 0)
+                                for section_name, section_info in TEST_SECTIONS.items()}
+                section_chart = visualizer.create_section_scores_chart(section_data)
+                story.append(section_chart)
 
-        # Detalle de Respuestas por Sección
-        story.append(Paragraph("Detalle de Respuestas", self.subtitle_style))
+                logger.info("Visualizaciones generadas exitosamente")
+            except Exception as e:
+                logger.error(f"Error al generar visualizaciones: {str(e)}")
+                # Continuamos con el resto del informe aunque fallen los gráficos
 
-        for section_name, section_info in TEST_SECTIONS.items():
-            story.append(Spacer(1, 10))
-            story.append(Paragraph(section_info['title'], self.subtitle_style))
+            # Añadir espacio después de los gráficos
+            story.append(Spacer(1, 20))
 
-            section_items = []
-            for item_name, item_info in ALL_ITEMS.items():
-                if (item_info['section'] == section_name and
-                        item_name in data and
-                        data[item_name]):
+            # Resultados por Sección
+            story.append(Paragraph("Resultados por Sección", self.subtitle_style))
+            section_data = [["Sección", "Puntuación Total"]]
+            for section_name, section_info in TEST_SECTIONS.items():
+                section_score = sum(int(data.get(item_name, 0))
+                                    for item_name, item_info in ALL_ITEMS.items()
+                                    if item_info['section'] == section_name and item_name in data)
+                section_data.append([section_info['title'], str(section_score)])
 
-                    selected_value = int(data[item_name])
-                    selected_text = ""
-                    for opt in item_info['options']:
-                        if opt['value'] == selected_value:
-                            selected_text = opt['text']
-                            break
+            section_table = Table(section_data, colWidths=[5 * inch, 1.5 * inch])
+            section_table.setStyle(TableStyle([
+                ('GRID', (0, 0), (-1, -1), 0.5, colors.grey),
+                ('BACKGROUND', (0, 0), (-1, 0), colors.lightgrey),
+                ('PADDING', (0, 0), (-1, -1), 6),
+                ('ALIGN', (-1, 0), (-1, -1), 'CENTER'),
+            ]))
+            story.append(section_table)
+            story.append(Spacer(1, 20))
 
-                    section_items.append((
-                        item_info['number'],
-                        item_info['title'],
-                        f"{selected_value} - {selected_text}",
-                        item_info['type']
+            # Detalle de Respuestas por Sección
+            story.append(Paragraph("Detalle de Respuestas", self.subtitle_style))
+
+            for section_name, section_info in TEST_SECTIONS.items():
+                story.append(Spacer(1, 10))
+                story.append(Paragraph(section_info['title'], self.subtitle_style))
+
+                section_items = []
+                for item_name, item_info in ALL_ITEMS.items():
+                    if (item_info['section'] == section_name and
+                            item_name in data and
+                            data[item_name]):
+
+                        selected_value = int(data[item_name])
+                        selected_text = ""
+                        for opt in item_info['options']:
+                            if opt['value'] == selected_value:
+                                selected_text = opt['text']
+                                break
+
+                        section_items.append((
+                            item_info['number'],
+                            item_info['title'],
+                            f"{selected_value} - {selected_text}",
+                            item_info['type']
+                        ))
+
+                section_items.sort(key=lambda x: x[0])
+
+                for num, title, response, item_type in section_items:
+                    story.append(Paragraph(
+                        f"{num}. {title} [{item_type}]:",
+                        self.normal_style
                     ))
+                    story.append(Paragraph(
+                        f"    Respuesta: {response}",
+                        self.normal_style
+                    ))
+                    story.append(Spacer(1, 5))
 
-            section_items.sort(key=lambda x: x[0])
+            # Observaciones adicionales si existen
+            if any(key in data for key in
+                   ['estado_conductual', 'estado_salud', 'otras_observaciones', 'cantidad_movimientos']):
+                story.append(Spacer(1, 15))
+                story.append(Paragraph("Observaciones", self.subtitle_style))
 
-            for num, title, response, item_type in section_items:
-                story.append(Paragraph(
-                    f"{num}. {title} [{item_type}]:",
-                    self.normal_style
-                ))
-                story.append(Paragraph(
-                    f"    Respuesta: {response}",
-                    self.normal_style
-                ))
-                story.append(Spacer(1, 5))
+                if 'cantidad_movimientos' in data and data['cantidad_movimientos']:
+                    story.append(Paragraph(f"Cantidad de movimientos: {data['cantidad_movimientos']}", self.normal_style))
 
-        # Observaciones adicionales si existen
-        if any(key in data for key in
-               ['estado_conductual', 'estado_salud', 'otras_observaciones', 'cantidad_movimientos']):
-            story.append(Spacer(1, 15))
-            story.append(Paragraph("Observaciones", self.subtitle_style))
+                if 'estado_conductual' in data and data['estado_conductual']:
+                    story.append(Paragraph(f"Estado conductual: {data['estado_conductual']}", self.normal_style))
 
-            if 'cantidad_movimientos' in data and data['cantidad_movimientos']:
-                story.append(Paragraph(f"Cantidad de movimientos: {data['cantidad_movimientos']}", self.normal_style))
+                if 'estado_salud' in data and data['estado_salud']:
+                    story.append(Paragraph(f"Estado de salud: {data['estado_salud']}", self.normal_style))
 
-            if 'estado_conductual' in data and data['estado_conductual']:
-                story.append(Paragraph(f"Estado conductual: {data['estado_conductual']}", self.normal_style))
+                if 'otras_observaciones' in data and data['otras_observaciones']:
+                    story.append(Paragraph(f"Otras observaciones: {data['otras_observaciones']}", self.normal_style))
 
-            if 'estado_salud' in data and data['estado_salud']:
-                story.append(Paragraph(f"Estado de salud: {data['estado_salud']}", self.normal_style))
+            # Fecha y firma
+            story.append(Spacer(1, 40))
+            story.append(Paragraph(
+                f"Fecha del informe: {datetime.now().strftime('%d/%m/%Y')}",
+                self.normal_style
+            ))
+            story.append(Spacer(1, 20))
+            story.append(Paragraph("Firma del evaluador:", self.normal_style))
+            story.append(Paragraph("_" * 30, self.normal_style))
 
-            if 'otras_observaciones' in data and data['otras_observaciones']:
-                story.append(Paragraph(f"Otras observaciones: {data['otras_observaciones']}", self.normal_style))
+            doc.build(story, onFirstPage=add_header_footer, onLaterPages=add_header_footer)
+            return buffer.getvalue()
 
-        # Fecha y firma
-        story.append(Spacer(1, 40))
-        story.append(Paragraph(
-            f"Fecha del informe: {datetime.now().strftime('%d/%m/%Y')}",
-            self.normal_style
-        ))
-        story.append(Spacer(1, 20))
-        story.append(Paragraph("Firma del evaluador:", self.normal_style))
-        story.append(Paragraph("_" * 30, self.normal_style))
+        except Exception as e:
+            logger.error(f"Error al generar el informe PDF: {str(e)}")
+            raise
 
-        doc.build(story, onFirstPage=add_header_footer, onLaterPages=add_header_footer)
-        return buffer.getvalue()
+        finally:
+            buffer.close()
+
+
+
