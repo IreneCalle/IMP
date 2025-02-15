@@ -1,0 +1,1281 @@
+{% extends "base.html" %}
+
+{% block title %}Evaluación del Rendimiento Motor Infantil (IMP){% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto">
+    <!-- Cabecera del formulario -->
+    <header class="text-center mb-8">
+    <h1 class="text-3xl font-bold text-blue-600">Evaluación del Rendimiento Motor Infantil (IMP)</h1>
+        <p class="mt-2 text-gray-600">Formulario de evaluación estandarizado para bebés de 32 semanas postmenstruales a 16 semanas postérmino</p>
+    </header>
+
+    <!-- Formulario Principal -->
+    <form id="impForm" class="bg-white shadow-lg rounded-lg p-6">
+        <!-- Sección 1: Datos Básicos -->
+        <section class="card">
+            <h2 class="text-xl font-semibold mb-4 text-gray-700">Datos Básicos</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="patientId">
+                        ID Paciente
+                    </label>
+                    <input type="text" id="patientId" name="patientId" required
+                           class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="age_weeks">
+                        Edad (semanas)
+                    </label>
+                    <input type="number" id="age_weeks" name="age_weeks" required min="32" max="64"
+                           class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="evaluationDate">
+                        Fecha de Evaluación
+                    </label>
+                    <input type="date" id="evaluationDate" name="evaluationDate" required
+                           class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="evaluator">
+                        Evaluador
+                    </label>
+                    <input type="text" id="evaluator" name="evaluator" required
+                           class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección A: Decúbito Supino -->
+        <section class="card">
+            <h2 class="text-xl font-semibold mb-4 text-gray-700" style="padding: 10px 0;">A. Posición Boca Arriba (Decúbito Supino)</h2>
+            <div class="grid grid-cols-1 gap-6">
+                <!-- Control de Cabeza -->
+                <div class="border p-4 rounded-lg">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">
+                        1. Control de movimientos de la cabeza
+                    </label>
+                    <select name="control_cabeza" required class="w-full px-3 py-2 border rounded-lg">
+                        <option value="">Seleccionar...</option>
+                        <option value="1">No controla los movimientos de la cabeza</option>
+                        <option value="2">Controla los movimientos de la cabeza de forma limitada</option>
+                        <option value="3">Controla los movimientos de la cabeza</option>
+                    </select>
+                </div>
+
+                <!-- Variedad de Movimientos -->
+                <div class="border p-4 rounded-lg">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">
+                        2. Variedad de movimientos de la cabeza
+                    </label>
+                    <select name="variedad_movimientos_cabeza" required class="w-full px-3 py-2 border rounded-lg">
+                        <option value="">Seleccionar...</option>
+                        <option value="1">Variedad insuficiente</option>
+                        <option value="2">Variedad suficiente</option>
+                    </select>
+                </div>
+
+                <!-- Adaptabilidad -->
+                <div class="border p-4 rounded-lg">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">
+                        3. Capacidad de adaptar los movimientos de la cabeza
+                    </label>
+                    <select name="adaptabilidad_movimientos_cabeza" required class="w-full px-3 py-2 border rounded-lg">
+                        <option value="">Seleccionar...</option>
+                        <option value="1">Sin capacidad de adaptar el movimiento</option>
+                        <option value="2">Con capacidad de adaptar el movimiento</option>
+                    </select>
+                </div>
+
+                <!-- Posición de la Cabeza -->
+                <div class="border p-4 rounded-lg">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">
+                        4. Posición de la cabeza, tendencia hacia un lado
+                    </label>
+                    <select name="posicion_cabeza_lado" required class="w-full px-3 py-2 border rounded-lg">
+                        <option value="">Seleccionar...</option>
+                        <option value="1">Posición muy marcada hacia derecha/izquierda</option>
+                        <option value="2">Posición moderadamente marcada hacia derecha/izquierda</option>
+                        <option value="3">Sin posición predominante o ligera tendencia hacia un lado</option>
+                    </select>
+                </div>
+
+               <!-- 5. RTCA (Reflejo Tónico del Cuello) -->
+<div class="border p-4 rounded-lg">
+    <label class="block text-gray-700 text-sm font-bold mb-2">
+        5. Postura, presencia de reflejo tónico del cuello (RTCA)
+    </label>
+    <select name="rtca_presencia" required class="w-full px-3 py-2 border rounded-lg">
+        <option value="">Seleccionar...</option>
+        <option value="1">Reflejo frecuente u obligatorio</option>
+        <option value="2">Sin reflejo o reflejo ocasional no obligatorio</option>
+    </select>
+</div>
+
+<!-- 6. Hiperextensión -->
+<div class="border p-4 rounded-lg">
+    <label class="block text-gray-700 text-sm font-bold mb-2">
+        6. Postura, presencia de hiperextensión de cuello y tronco
+    </label>
+    <select name="hiperextension_presencia" required class="w-full px-3 py-2 border rounded-lg">
+        <option value="">Seleccionar...</option>
+        <option value="1">Extensión excesiva frecuente o persistente</option>
+        <option value="2">Sin extensión excesiva o raramente presente</option>
+    </select>
+</div>
+
+<!-- 7. Manipulación con Manos -->
+<div class="border p-4 rounded-lg">
+    <label class="block text-gray-700 text-sm font-bold mb-2">
+        7. Manipulación con manos y dedos
+    </label>
+    <select name="manipulacion_manos" required class="w-full px-3 py-2 border rounded-lg">
+        <option value="">Seleccionar...</option>
+        <option value="1">No manipula</option>
+        <option value="2">Manipula ropa; con manos en línea media, sobre rodillas o pies; juega con manos en boca</option>
+    </select>
+</div>
+
+<!-- 8. Variedad de Movimientos de Brazos -->
+<div class="border p-4 rounded-lg">
+    <label class="block text-gray-700 text-sm font-bold mb-2">
+        8. Variedad de movimientos de brazos
+    </label>
+    <select name="variedad_movimientos_brazos" required class="w-full px-3 py-2 border rounded-lg">
+        <option value="">Seleccionar...</option>
+        <option value="1">Variedad insuficiente</option>
+        <option value="2">Variedad suficiente</option>
+    </select>
+</div>
+
+<!-- 9. Variedad de Movimientos de Dedos -->
+<div class="border p-4 rounded-lg">
+    <label class="block text-gray-700 text-sm font-bold mb-2">
+        9. Variedad de movimientos de dedos
+    </label>
+    <select name="variedad_movimientos_dedos" required class="w-full px-3 py-2 border rounded-lg">
+        <option value="">Seleccionar...</option>
+        <option value="1">Variedad insuficiente</option>
+        <option value="2">Variedad suficiente</option>
+    </select>
+</div>
+
+<!-- 10. Basculación Pélvica -->
+<div class="border p-4 rounded-lg">
+    <label class="block text-gray-700 text-sm font-bold mb-2">
+        10. Movimiento de la pelvis (basculación pélvica)
+    </label>
+    <select name="basculacion_pelvis" required class="w-full px-3 py-2 border rounded-lg">
+        <option value="">Seleccionar...</option>
+        <option value="1">Sin movimiento de pelvis</option>
+        <option value="2">Mueve la pelvis, pero no lo suficiente para que las manos toquen las rodillas</option>
+        <option value="3">Mueve la pelvis permitiendo que las manos toquen las rodillas</option>
+        <option value="4">Las manos juegan con los pies</option>
+    </select>
+</div>
+
+<!-- 11. Variedad de Movimientos de Piernas -->
+<div class="border p-4 rounded-lg">
+    <label class="block text-gray-700 text-sm font-bold mb-2">
+        11. Variedad de movimientos de piernas
+    </label>
+    <select name="variedad_movimientos_piernas" required class="w-full px-3 py-2 border rounded-lg">
+        <option value="">Seleccionar...</option>
+        <option value="1">Variedad insuficiente</option>
+        <option value="2">Variedad suficiente</option>
+    </select>
+</div>
+
+<!-- 12. Variedad de Movimientos de Dedos del Pie -->
+<div class="border p-4 rounded-lg">
+    <label class="block text-gray-700 text-sm font-bold mb-2">
+        12. Variedad de movimientos de dedos del pie
+    </label>
+    <select name="variedad_movimientos_dedos_pie" required class="w-full px-3 py-2 border rounded-lg">
+        <option value="">Seleccionar...</option>
+        <option value="1">Variedad insuficiente</option>
+        <option value="2">Variedad suficiente</option>
+    </select>
+</div>
+
+<!-- 13. Giro de Supino a Prono -->
+<div class="border p-4 rounded-lg">
+    <label class="block text-gray-700 text-sm font-bold mb-2">
+        13. Giro (volteo) de boca arriba a boca abajo
+    </label>
+    <select name="giro_supino_prono" required class="w-full px-3 py-2 border rounded-lg">
+        <option value="">Seleccionar...</option>
+        <option value="1">Sin intentos de giro</option>
+        <option value="2">Hace movimientos serpenteantes con la pelvis, pero no gira hacia el lado</option>
+        <option value="3">Gira hacia un lado, unilateral</option>
+        <option value="4">Gira hacia ambos lados</option>
+        <option value="5">Se voltea completamente hacia un lado</option>
+        <option value="6">Se voltea completamente hacia ambos lados</option>
+    </select>
+</div>
+
+<!-- 14. Alcance y Manipulación -->
+<div class="border p-4 rounded-lg">
+    <label class="block text-gray-700 text-sm font-bold mb-2">
+        14. Alcance, agarre y manipulación de objetos
+    </label>
+    <select name="alcance_manipulacion" required class="w-full px-3 py-2 border rounded-lg">
+        <option value="">Seleccionar...</option>
+        <option value="1">No intenta alcanzar, no muestra movimientos de intento</option>
+        <option value="2">No alcanza, pero muestra intentos de movimiento</option>
+        <option value="3">Intenta alcanzar el objeto pero no lo agarra</option>
+        <option value="4">Alcanza, agarra y sostiene el objeto, pero no lo manipula</option>
+        <option value="5">Alcanza, sostiene y manipula 1 objeto</option>
+        <option value="6">Alcanza, sostiene y manipula 2 objetos</option>
+        <option value="7">Alcanza y sostiene ≥3 objetos</option>
+    </select>
+</div>
+
+<!-- 15. Asimetría en Alcance -->
+<div class="border p-4 rounded-lg">
+    <label class="block text-gray-700 text-sm font-bold mb-2">
+        15. Alcance, agarre y manipulación: presencia de asimetría
+    </label>
+    <select name="asimetria_alcance_supino" required class="w-full px-3 py-2 border rounded-lg">
+        <option value="">Seleccionar...</option>
+        <option value="0">Sin movimientos de alcance o intento</option>
+        <option value="1">Asimetría marcada, lado derecho/izquierdo peor</option>
+        <option value="2">Asimetría moderada, lado derecho/izquierdo peor</option>
+        <option value="3">Sin asimetría o asimetría leve</option>
+    </select>
+</div>
+
+<!-- 16. Variedad en Alcance -->
+<div class="border p-4 rounded-lg">
+    <label class="block text-gray-700 text-sm font-bold mb-2">
+        16. Variedad en movimientos de alcance de los brazos
+    </label>
+    <select name="variedad_alcance_supino" required class="w-full px-3 py-2 border rounded-lg">
+        <option value="">Seleccionar...</option>
+        <option value="0">Sin movimientos de alcance</option>
+        <option value="1">Variedad insuficiente</option>
+        <option value="2">Variedad suficiente</option>
+    </select>
+</div>
+
+<!-- 17. Adaptabilidad en Alcance -->
+<div class="border p-4 rounded-lg">
+    <label class="block text-gray-700 text-sm font-bold mb-2">
+        17. Adaptabilidad de movimientos de alcance de los brazos
+    </label>
+    <select name="adaptabilidad_alcance_supino" required class="w-full px-3 py-2 border rounded-lg">
+        <option value="">Seleccionar...</option>
+        <option value="0">Sin movimientos de alcance</option>
+        <option value="1">Sin capacidad de adaptar el movimiento</option>
+        <option value="2">Con capacidad de adaptar el movimiento</option>
+    </select>
+</div>
+
+<!-- 18. Variedad en Movimientos de Mano -->
+<div class="border p-4 rounded-lg">
+    <label class="block text-gray-700 text-sm font-bold mb-2">
+        18. Variedad en movimientos de la mano durante alcance, agarre y manipulación
+    </label>
+    <select name="variedad_mano_alcance_supino" required class="w-full px-3 py-2 border rounded-lg">
+        <option value="">Seleccionar...</option>
+        <option value="0">Sin movimientos de alcance</option>
+        <option value="1">Variedad insuficiente</option>
+        <option value="2">Variedad suficiente</option>
+    </select>
+</div>
+
+<!-- 19. Adaptabilidad de Movimientos de Mano -->
+<div class="border p-4 rounded-lg">
+    <label class="block text-gray-700 text-sm font-bold mb-2">
+        19. Adaptabilidad de movimientos de la mano durante alcance, agarre y manipulación
+    </label>
+    <select name="adaptabilidad_mano_supino" required class="w-full px-3 py-2 border rounded-lg">
+        <option value="">Seleccionar...</option>
+        <option value="0">Sin movimientos de alcance</option>
+        <option value="1">Sin capacidad de adaptar el movimiento</option>
+        <option value="2">Con capacidad de adaptar el movimiento</option>
+    </select>
+</div>
+
+<!-- 20. Temblor en Alcance -->
+<div class="border p-4 rounded-lg">
+    <label class="block text-gray-700 text-sm font-bold mb-2">
+        20. Temblor durante intentos de alcance
+    </label>
+    <select name="temblor_alcance_supino" required class="w-full px-3 py-2 border rounded-lg">
+        <option value="">Seleccionar...</option>
+        <option value="0">Sin movimientos de alcance o intento</option>
+        <option value="1">Temblor frecuente</option>
+        <option value="2">Sin temblor o temblor ocasional</option>
+    </select>
+</div>
+
+<!-- 21. Fluidez de Movimiento -->
+<div class="border p-4 rounded-lg">
+    <label class="block text-gray-700 text-sm font-bold mb-2">
+        21. Fluidez de movimiento en posición boca arriba
+    </label>
+    <select name="fluidez_movimiento_supino" required class="w-full px-3 py-2 border rounded-lg">
+        <option value="">Seleccionar...</option>
+        <option value="1">No fluido: rígido, brusco, flácido/lento</option>
+        <option value="2">Fluido</option>
+    </select>
+</div>
+            </div>
+        </section>
+
+        <!-- Sección B: Decúbito Prono -->
+        <section class="card">
+            <h2 class="text-xl font-semibold mb-4 text-gray-700" style="padding: 10px 0;">B. Posición Boca Abajo (Decúbito Prono)</h2>
+            <div class="grid grid-cols-1 gap-6">
+                <!-- Elevación de la Cabeza -->
+                <div class="border p-4 rounded-lg">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">
+                        22. Elevación de la cabeza en prono
+                    </label>
+                    <select name="elevacion_cabeza_prono" required class="w-full px-3 py-2 border rounded-lg">
+                        <option value="">Seleccionar...</option>
+                        <option value="1">No levanta ni gira la cabeza</option>
+                        <option value="2">Gira la cabeza hacia un lado con mínima elevación</option>
+                        <option value="3">Levanta la cabeza durante unos segundos</option>
+                        <option value="4">Mantiene la cabeza levantada al menos 10 segundos, con alguna dificultad para mirar alrededor</option>
+                        <option value="5">Mantiene la cabeza levantada y mira alrededor</option>
+                    </select>
+                </div>
+
+
+
+        <!-- 23. Posición de la Cabeza -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                23. Posición de la cabeza, presencia de tendencia hacia un lado
+            </label>
+            <select name="posicion_cabeza_prono" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="0">No levanta ni gira la cabeza</option>
+                <option value="1">Posición muy marcada hacia derecha/izquierda</option>
+                <option value="2">Posición moderadamente marcada hacia derecha/izquierda</option>
+                <option value="3">Sin posición predominante o ligera tendencia hacia un lado</option>
+            </select>
+        </div>
+
+        <!-- 24. Variedad de Movimientos -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                24. Variedad de movimientos de la cabeza
+            </label>
+            <select name="variedad_movimientos_cabeza_prono" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="1">Variedad insuficiente</option>
+                <option value="2">Variedad suficiente</option>
+            </select>
+        </div>
+
+        <!-- 25. Adaptabilidad -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                25. Adaptabilidad de movimientos de la cabeza
+            </label>
+            <select name="adaptabilidad_movimientos_cabeza_prono" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="1">Sin capacidad de adaptar el movimiento</option>
+                <option value="2">Con capacidad de adaptar el movimiento</option>
+            </select>
+        </div>
+
+        <!-- 26. Capacidad Funcional Hombros -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                26. Capacidad funcional de la cintura escapular mientras está en prono
+            </label>
+            <select name="capacidad_funcional_hombros" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="1">No usa brazos ni manos para elevar cabeza y tórax</option>
+                <option value="2">Usa brazos y manos para elevar cabeza y tórax, pero no logra apoyo activo en codos y antebrazos</option>
+                <option value="3">Se apoya en codos y antebrazos</option>
+                <option value="4">Eleva la parte superior del tórax apoyándose en manos con brazos extendidos</option>
+            </select>
+        </div>
+
+        <!-- 27. Capacidad Funcional Brazos -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                27. Capacidad funcional de brazos y manos mientras está en prono
+            </label>
+            <select name="capacidad_funcional_brazos" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="1">Tiene dificultades para usar brazos y manos en control postural y no los usa para otras actividades</option>
+                <option value="2">Usa uno o dos brazos y manos para control postural, sin usarlos para otras actividades</option>
+                <option value="3">Usa uno o dos brazos para control postural mientras las manos muestran algo de juego</option>
+                <option value="4">Usa un brazo para apoyo postural y usa el otro brazo y mano para alcance y manipulación</option>
+            </select>
+        </div>
+
+        <!-- 28. Asimetría en Postura -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                28. Postura y movimientos de brazos y manos durante actividad: presencia de asimetría
+            </label>
+            <select name="asimetria_postura_prono" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="0">Ambos brazos permanecen en posición impuesta por examinador</option>
+                <option value="1">Asimetría marcada, lado derecho/izquierdo peor</option>
+                <option value="2">Asimetría moderada, lado derecho/izquierdo peor</option>
+                <option value="3">Sin asimetría o asimetría leve</option>
+            </select>
+        </div>
+
+        <!-- 29. Progresión en Prono -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                29. Progresión mientras está en prono: desarrollo del gateo
+            </label>
+            <select name="progresion_prono" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="1">No muestra giro sobre sí mismo (pivote) ni gateo</option>
+                <option value="2">Gira sobre sí mismo (pivote)</option>
+                <option value="3">Gateo sobre abdomen, usa brazos y/o piernas</option>
+                <option value="4">Gatea sobre manos y rodillas, abdomen separado de la superficie</option>
+            </select>
+        </div>
+
+        <!-- 30. Variedad en Pre-gateo -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                30. Variedad en movimientos pre-gateo de las piernas
+            </label>
+            <select name="variedad_pregateo" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="0">Muestra progresión en prono (gateo)</option>
+                <option value="1">Variedad insuficiente</option>
+                <option value="2">Variedad suficiente</option>
+            </select>
+        </div>
+
+        <!-- 31. Giro de Prono a Supino -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                31. Giro (volteo) de boca abajo a boca arriba
+            </label>
+            <select name="giro_prono_supino" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="0">No muestra giro ya que prefiere cambiar de posición mediante gateo</option>
+                <option value="1">Sin intentos de giro, no puede cambiar posición con ayuda de sentado o gateo</option>
+                <option value="2">Gira hacia un lado, unilateral</option>
+                <option value="3">Gira hacia ambos lados</option>
+                <option value="4">Voltea completamente hacia un lado</option>
+                <option value="5">Voltea completamente hacia ambos lados</option>
+            </select>
+        </div>
+
+        <!-- 32. Variedad en Gateo -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                32. Variedad en el gateo
+            </label>
+            <select name="variedad_gateo" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="0">No muestra progresión en prono</option>
+                <option value="1">Variedad insuficiente</option>
+                <option value="2">Variedad suficiente</option>
+            </select>
+        </div>
+
+        <!-- 33. Adaptabilidad del Gateo -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                33. Adaptabilidad del gateo
+            </label>
+            <select name="adaptabilidad_gateo" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="0">No muestra progresión en prono</option>
+                <option value="1">Sin capacidad de adaptar el movimiento</option>
+                <option value="2">Con capacidad de adaptar el movimiento</option>
+            </select>
+        </div>
+    </div>
+</section>
+
+         <!-- Sección C: Sedestación -->
+<section class="card">
+    <h2 class="text-xl font-semibold mb-4 text-gray-700" style="padding: 10px 0;">C. Posición Sentada (Sedestación)</h2>
+    <div class="grid grid-cols-1 gap-6">
+        <!-- 34. Control de Cabeza -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                34. Control de movimientos de la cabeza
+            </label>
+            <select name="control_cabeza_sedestacion" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="1">No controla los movimientos de la cabeza</option>
+                <option value="2">Controla los movimientos de la cabeza de forma limitada</option>
+                <option value="3">Controla los movimientos de la cabeza</option>
+            </select>
+        </div>
+
+        <!-- 35. Posición de la Cabeza -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                35. Posición de la cabeza mientras está sentado: tendencia hacia un lado
+            </label>
+            <select name="posicion_cabeza_sedestacion" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="1">Posición muy marcada hacia derecha/izquierda</option>
+                <option value="2">Posición moderadamente marcada hacia derecha/izquierda</option>
+                <option value="3">Sin posición predominante o ligera tendencia hacia un lado</option>
+            </select>
+        </div>
+
+        <!-- 36. Capacidad de Sentarse -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                36. Capacidad de mantenerse sentado
+            </label>
+            <select name="capacidad_sentarse" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="1">No puede sentarse independientemente</option>
+                <option value="2">Se sienta con flexión extrema de pelvis (abdomen tocando muslos), brazos apoyados; no puede sentarse erguido</option>
+                <option value="3">Se sienta independientemente más de 5 segundos; no puede desplazar peso</option>
+                <option value="4">Se sienta independientemente, puede desplazar peso, pero muestra poca o ninguna rotación de tronco</option>
+                <option value="5">Se sienta independientemente y puede desplazar peso y rotar el tronco</option>
+            </select>
+        </div>
+
+        <!-- 37. Postura del Tronco -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                37. Postura del tronco en sedestación independiente
+            </label>
+            <select name="postura_tronco_sedestacion" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="0">No puede sentarse independientemente</option>
+                <option value="1">Espalda redondeada</option>
+                <option value="2">Espalda recta</option>
+            </select>
+        </div>
+
+        <!-- 38. Asimetría Tronco y Piernas -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                38. Postura de tronco y piernas mientras está sentado: presencia de asimetría
+            </label>
+            <select name="asimetria_tronco_piernas" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="0">No puede sentarse independientemente</option>
+                <option value="1">Asimetría marcada, se cae hacia derecha/izquierda</option>
+                <option value="2">Asimetría moderada, se inclina hacia derecha/izquierda</option>
+                <option value="3">Sin asimetría o asimetría leve</option>
+            </select>
+        </div>
+
+        <!-- 39. Asimetría Extremidades Superiores -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                39. Postura y movimientos de extremidades superiores durante sedestación: presencia de asimetría
+            </label>
+            <select name="asimetria_extremidades_superiores" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="0">Puede sentarse independientemente de forma limitada</option>
+                <option value="1">Asimetría marcada, lado derecho/izquierdo peor</option>
+                <option value="2">Asimetría moderada, lado derecho/izquierdo peor</option>
+                <option value="3">Sin asimetría o asimetría leve</option>
+            </select>
+        </div>
+
+        <!-- 40. Uso de Brazos -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                40. Uso de brazos para actividades voluntarias
+            </label>
+            <select name="uso_brazos" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="0">No puede sentarse independientemente</option>
+                <option value="1">Usa uno o dos brazos para apoyo postural, no los usa para actividad voluntaria</option>
+                <option value="2">Usa un brazo para apoyo postural, usa el otro para actividad voluntaria</option>
+                <option value="3">Usa ambos brazos para actividad voluntaria, no los usa para apoyo postural</option>
+            </select>
+        </div>
+
+        <!-- 41. Variedad en Sedestación -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                41. Variedad en los movimientos durante sedestación
+            </label>
+            <select name="variedad_sedestacion" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="0">No puede sentarse independientemente</option>
+                <option value="1">Variedad insuficiente</option>
+                <option value="2">Variedad suficiente</option>
+            </select>
+        </div>
+
+        <!-- 42. Adaptabilidad en Sedestación -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                42. Adaptabilidad de movimientos durante sedestación
+            </label>
+            <select name="adaptabilidad_sedestacion" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="0">No puede sentarse independientemente</option>
+                <option value="1">Sin capacidad de adaptar el movimiento</option>
+                <option value="2">Con capacidad de adaptar el movimiento</option>
+            </select>
+        </div>
+
+        <!-- 43. Pasar a Sentado -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                43. Pasar a posición sentada
+            </label>
+            <select name="pasar_sentado" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="1">No se sienta o se levanta independientemente</option>
+                <option value="2">Se sienta o se levanta independientemente</option>
+            </select>
+        </div>
+
+        <!-- 44. Variedad al Sentarse -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                44. Variedad al pasar a posición sentada
+            </label>
+            <select name="variedad_sentarse" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="0">No mostró o solo mostró una vez movimientos para sentarse o levantarse</option>
+                <option value="1">Variedad insuficiente</option>
+                <option value="2">Variedad suficiente</option>
+            </select>
+        </div>
+
+        <!-- 45. Adaptabilidad al Sentarse -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                45. Adaptabilidad al pasar a posición sentada
+            </label>
+            <select name="adaptabilidad_sentarse" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="0">No mostró o solo mostró una vez movimientos para sentarse o levantarse</option>
+                <option value="1">Sin capacidad de adaptar el movimiento</option>
+                <option value="2">Con capacidad de adaptar el movimiento</option>
+            </select>
+        </div>
+
+        <!-- 46. Desplazamiento Sentado -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                46. Desplazamiento sentado
+            </label>
+            <select name="desplazamiento_sentado" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="0">No puede sentarse independientemente</option>
+                <option value="1">El desplazamiento sentado es, aparte de la marcha, la única estrategia para moverse</option>
+                <option value="2">Sin desplazamiento sentado o presente como una de las estrategias para moverse</option>
+            </select>
+        </div>
+    </div>
+</section>
+
+                <!-- Sección D: Bipedestación y marcha -->
+<section class="card">
+
+    <h2 class="text-xl font-semibold mb-4 text-gray-700" style="padding: 10px 0;">D. Posición de Pie (Bipedestación) y Marcha</h2>
+    <div class="grid grid-cols-1 gap-6">
+        <!-- 47. Capacidad de Estar de Pie -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                47. Capacidad de mantenerse de pie
+            </label>
+            <select name="capacidad_bipedestacion" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="1">No puede ponerse de pie</option>
+                <option value="2">Se mantiene de pie con ayuda</option>
+                <option value="3">Se mantiene de pie independientemente durante unos segundos</option>
+                <option value="4">Se mantiene de pie independientemente más de 10 segundos, pero rota el tronco mínimamente</option>
+                <option value="5">Se mantiene de pie independientemente y puede rotar el tronco</option>
+            </select>
+        </div>
+
+        <!-- 48. Ponerse de Pie -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                48. Ponerse de pie
+            </label>
+            <select name="ponerse_pie" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="1">No puede ponerse de pie</option>
+                <option value="2">Se pone de rodillas</option>
+                <option value="3">Se pone de pie independientemente con ayuda de muebles</option>
+                <option value="4">Se pone de pie independientemente sin usar muebles</option>
+            </select>
+        </div>
+
+        <!-- 49. Variedad al Ponerse de Pie -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                49. Variedad en ponerse de pie
+            </label>
+            <select name="variedad_ponerse_pie" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="0">No se puso de pie o solo lo hizo una vez</option>
+                <option value="1">Variedad insuficiente</option>
+                <option value="2">Variedad suficiente</option>
+            </select>
+        </div>
+
+        <!-- 50. Adaptabilidad al Ponerse de Pie -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                50. Adaptabilidad al ponerse de pie
+            </label>
+            <select name="adaptabilidad_ponerse_pie" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="0">No se puso de pie o solo lo hizo una vez</option>
+                <option value="1">Sin capacidad de adaptar el movimiento</option>
+                <option value="2">Con capacidad de adaptar el movimiento</option>
+            </select>
+        </div>
+
+        <!-- 51. Marcha -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                51. Marcha
+            </label>
+            <select name="marcha" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="1">No puede caminar</option>
+                <option value="2">Camina cuando recibe apoyo con dos manos</option>
+                <option value="3">Camina cuando recibe apoyo con una mano</option>
+                <option value="4">Camina independientemente</option>
+            </select>
+        </div>
+
+        <!-- 52. Equilibrio en Marcha -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                52. Equilibrio mientras camina independientemente
+            </label>
+            <select name="equilibrio_marcha" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="0">No puede caminar independientemente</option>
+                <option value="1">Pobre capacidad de equilibrio</option>
+                <option value="2">Moderada capacidad de equilibrio</option>
+                <option value="3">Buena capacidad de equilibrio</option>
+            </select>
+        </div>
+
+        <!-- 53. Postura de Brazos en Marcha -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                53. Postura de brazos mientras camina independientemente
+            </label>
+            <select name="postura_brazos_marcha" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="0">No puede caminar independientemente</option>
+                <option value="1">Guardia alta o semi-alta</option>
+                <option value="2">Postura de brazos arbitraria</option>
+            </select>
+        </div>
+
+        <!-- 54. Asimetría Extremidades Superiores -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                54. Postura y movimientos de extremidades superiores mientras camina independientemente: presencia de asimetría
+            </label>
+            <select name="asimetria_extremidades_superiores_marcha" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="0">No puede caminar independientemente</option>
+                <option value="1">Asimetría marcada, lado derecho/izquierdo peor</option>
+                <option value="2">Asimetría moderada, lado derecho/izquierdo peor</option>
+                <option value="3">Sin asimetría o asimetría leve</option>
+            </select>
+        </div>
+
+        <!-- 55-65. Continuación de ítems... -->
+        <!-- Variedad en Movimientos de Brazos y Manos -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                55. Variedad en movimientos de brazos y manos mientras camina independientemente
+            </label>
+            <select name="variedad_brazos_marcha" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="0">No puede caminar independientemente o camina con guardia alta/semi-alta</option>
+                <option value="1">Variedad insuficiente</option>
+                <option value="2">Variedad suficiente</option>
+            </select>
+        </div>
+
+        <!-- Adaptabilidad de Movimientos de Brazos y Manos -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                56. Adaptabilidad de movimientos de brazos y manos mientras camina independientemente
+            </label>
+            <select name="adaptabilidad_brazos_marcha" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="0">No puede caminar independientemente o camina con guardia alta/semi-alta</option>
+                <option value="1">Sin capacidad de adaptar el movimiento</option>
+                <option value="2">Con capacidad de adaptar el movimiento</option>
+            </select>
+        </div>
+
+        <!-- Variedad en Movimientos del Tronco -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                57. Variedad en movimientos del tronco mientras está de pie y camina independientemente
+            </label>
+            <select name="variedad_tronco_marcha" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="0">No puede caminar independientemente</option>
+                <option value="1">Variedad insuficiente</option>
+                <option value="2">Variedad suficiente</option>
+            </select>
+        </div>
+
+        <!-- Adaptabilidad de Movimientos del Tronco -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                58. Adaptabilidad de movimientos del tronco mientras está de pie y camina independientemente
+            </label>
+            <select name="adaptabilidad_tronco_marcha" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="0">No puede caminar independientemente</option>
+                <option value="1">Sin capacidad de adaptar el movimiento</option>
+                <option value="2">Con capacidad de adaptar el movimiento</option>
+            </select>
+        </div>
+
+        <!-- Asimetría en Piernas -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                59. Postura y movimientos de piernas mientras camina independientemente: presencia de asimetría
+            </label>
+            <select name="asimetria_piernas_marcha" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="0">No puede caminar independientemente</option>
+                <option value="1">Asimetría marcada, lado derecho/izquierdo peor</option>
+                <option value="2">Asimetría moderada, lado derecho/izquierdo peor</option>
+                <option value="3">Sin asimetría o asimetría leve</option>
+            </select>
+        </div>
+
+        <!-- Variedad en Movimientos de Piernas -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                60. Variedad en movimientos de piernas mientras camina independientemente
+            </label>
+            <select name="variedad_piernas_marcha" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="0">No puede caminar independientemente</option>
+                <option value="1">Variedad insuficiente</option>
+                <option value="2">Variedad suficiente</option>
+            </select>
+        </div>
+
+        <!-- Adaptabilidad de Movimientos de Piernas -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                61. Adaptabilidad de movimientos de piernas mientras camina independientemente
+            </label>
+            <select name="adaptabilidad_piernas_marcha" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="0">No puede caminar independientemente</option>
+                <option value="1">Sin capacidad de adaptar el movimiento</option>
+                <option value="2">Con capacidad de adaptar el movimiento</option>
+            </select>
+        </div>
+
+        <!-- Marcha talón-punta -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                62. Marcha talón-punta mientras camina independientemente
+            </label>
+            <select name="marcha_talon_punta" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="0">No puede caminar independientemente</option>
+                <option value="1">Sin marcha talón-punta o solo ocasionalmente</option>
+                <option value="2">Predominantemente marcha talón-punta</option>
+            </select>
+        </div>
+
+        <!-- Variedad en Movimientos del Pie -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                63. Variedad en movimientos del pie mientras camina independientemente
+            </label>
+            <select name="variedad_pie_marcha" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="0">No puede caminar independientemente</option>
+                <option value="1">Variedad insuficiente</option>
+                <option value="2">Variedad suficiente</option>
+            </select>
+        </div>
+
+        <!-- Adaptabilidad de Movimientos del Pie -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                64. Adaptabilidad de movimientos del pie mientras camina independientemente
+            </label>
+            <select name="adaptabilidad_pie_marcha" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="0">No puede caminar independientemente</option>
+                <option value="1">Sin capacidad de adaptar el movimiento</option>
+                <option value="2">Con capacidad de adaptar el movimiento</option>
+            </select>
+        </div>
+
+        <!-- Fluidez de Movimientos -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                65. Fluidez de movimientos mientras camina independientemente
+            </label>
+            <select name="fluidez_marcha" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="1">No fluido: rígido, brusco, flácido/lento, otro</option>
+                <option value="2">La mayoría de movimientos fluidos</option>
+            </select>
+        </div>
+    </div>
+</section>
+
+<!-- Fluidez de Movimientos -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                65. Fluidez de movimientos mientras camina independientemente
+            </label>
+            <select name="fluidez_marcha" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="1">No fluido: rígido, brusco, flácido/lento, otro</option>
+                <option value="2">La mayoría de movimientos fluidos</option>
+            </select>
+        </div>
+
+</section>
+
+<!-- 66. Alcance y Manipulación en Sedestación -->
+<div class="border p-4 rounded-lg">
+    <label class="block text-gray-700 text-sm font-bold mb-2">
+        66. Alcance, agarre y manipulación de objetos mientras está sentado
+    </label>
+    <select name="alcance_manipulacion_sedestacion" required class="w-full px-3 py-2 border rounded-lg">
+        <option value="">Seleccionar...</option>
+        <option value="0">No puede sentarse independientemente</option>
+        <option value="1">No intenta alcanzar, no muestra movimientos de intento</option>
+        <option value="2">No alcanza, pero muestra intentos de movimiento</option>
+        <option value="3">Intenta alcanzar el objeto pero no lo agarra</option>
+        <option value="4">Alcanza, agarra y sostiene el objeto, pero no lo manipula</option>
+        <option value="5">Alcanza, sostiene y manipula 1 objeto</option>
+        <option value="6">Alcanza, sostiene y manipula 2 objetos</option>
+        <option value="7">Alcanza y sostiene ≥3 objetos</option>
+    </select>
+</div>
+
+<!-- 67. Asimetría en Alcance -->
+<div class="border p-4 rounded-lg">
+    <label class="block text-gray-700 text-sm font-bold mb-2">
+        67. Alcance, agarre y manipulación mientras está sentado: presencia de asimetría
+    </label>
+    <select name="asimetria_alcance_sedestacion" required class="w-full px-3 py-2 border rounded-lg">
+        <option value="">Seleccionar...</option>
+        <option value="0">No mostró movimientos de alcance o intento</option>
+        <option value="1">Asimetría marcada, lado derecho/izquierdo peor</option>
+        <option value="2">Asimetría moderada, lado derecho/izquierdo peor</option>
+        <option value="3">Sin asimetría o asimetría leve</option>
+    </select>
+</div>
+
+<!-- 68. Variedad en Alcance -->
+<div class="border p-4 rounded-lg">
+    <label class="block text-gray-700 text-sm font-bold mb-2">
+        68. Variedad en movimientos de alcance de los brazos mientras está sentado
+    </label>
+    <select name="variedad_alcance_sedestacion" required class="w-full px-3 py-2 border rounded-lg">
+        <option value="">Seleccionar...</option>
+        <option value="0">No mostró movimientos de alcance</option>
+        <option value="1">Variedad insuficiente</option>
+        <option value="2">Variedad suficiente</option>
+    </select>
+</div>
+
+<!-- 69. Adaptabilidad en Alcance -->
+<div class="border p-4 rounded-lg">
+    <label class="block text-gray-700 text-sm font-bold mb-2">
+        69. Adaptabilidad de movimientos de alcance de los brazos mientras está sentado
+    </label>
+    <select name="adaptabilidad_alcance_sedestacion" required class="w-full px-3 py-2 border rounded-lg">
+        <option value="">Seleccionar...</option>
+        <option value="0">No mostró movimientos de alcance</option>
+        <option value="1">Sin capacidad de adaptar el movimiento</option>
+        <option value="2">Con capacidad de adaptar el movimiento</option>
+    </select>
+</div>
+
+<!-- 70. Variedad en Movimientos de Mano -->
+<div class="border p-4 rounded-lg">
+    <label class="block text-gray-700 text-sm font-bold mb-2">
+        70. Variedad en movimientos de la mano durante alcance, agarre y manipulación mientras está sentado
+    </label>
+    <select name="variedad_mano_alcance_sedestacion" required class="w-full px-3 py-2 border rounded-lg">
+        <option value="">Seleccionar...</option>
+        <option value="0">No mostró movimientos de alcance</option>
+        <option value="1">Variedad insuficiente</option>
+        <option value="2">Variedad suficiente</option>
+    </select>
+</div>
+
+<!-- 71. Adaptabilidad de Movimientos de Mano -->
+<div class="border p-4 rounded-lg">
+    <label class="block text-gray-700 text-sm font-bold mb-2">
+        71. Adaptabilidad de movimientos de la mano durante alcance, agarre y manipulación mientras está sentado
+    </label>
+    <select name="adaptabilidad_mano_sedestacion" required class="w-full px-3 py-2 border rounded-lg">
+        <option value="">Seleccionar...</option>
+        <option value="0">No mostró movimientos de alcance</option>
+        <option value="1">Sin capacidad de adaptar el movimiento</option>
+        <option value="2">Con capacidad de adaptar el movimiento</option>
+    </select>
+</div>
+
+<!-- 72. Temblor en Alcance -->
+<div class="border p-4 rounded-lg">
+    <label class="block text-gray-700 text-sm font-bold mb-2">
+        72. Temblor durante intentos de alcance mientras está sentado
+    </label>
+    <select name="temblor_alcance_sedestacion" required class="w-full px-3 py-2 border rounded-lg">
+        <option value="">Seleccionar...</option>
+        <option value="0">No mostró movimientos de alcance o intento</option>
+        <option value="1">Temblor frecuente</option>
+        <option value="2">Sin temblor o temblor ocasional</option>
+    </select>
+</div>
+
+<!-- 73. Discinesia en Alcance -->
+<div class="border p-4 rounded-lg">
+    <label class="block text-gray-700 text-sm font-bold mb-2">
+        73. Discinesia durante intentos de alcance mientras está sentado
+    </label>
+    <select name="discinesia_alcance_sedestacion" required class="w-full px-3 py-2 border rounded-lg">
+        <option value="">Seleccionar...</option>
+        <option value="0">No mostró movimientos de alcance o intento</option>
+        <option value="1">Discinesia frecuente</option>
+        <option value="2">Sin discinesia o discinesia ocasional</option>
+    </select>
+</div>
+
+<!-- 74. Fluidez de Movimientos -->
+<div class="border p-4 rounded-lg">
+    <label class="block text-gray-700 text-sm font-bold mb-2" style="padding: 10px 0;">
+        74. Fluidez de movimientos durante alcance mientras está sentado
+    </label>
+    <select name="fluidez_alcance_sedestacion" required class="w-full px-3 py-2 border rounded-lg">
+        <option value="">Seleccionar...</option>
+        <option value="1">No fluido: rígido, brusco, flácido/lento</option>
+        <option value="2">La mayoría de movimientos fluidos</option>
+    </select>
+</div>
+
+        <!-- Sección F: General -->
+<section class="mb-8">
+    <h2 class="text-xl font-semibold mb-4 text-gray-700">F. General: Ítems observados durante la evaluación</h2>
+    <div class="grid grid-cols-1 gap-6">
+        <!-- 75. Variedad en Expresión Facial -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                75. Variedad en expresión facial
+            </label>
+            <select name="variedad_expresion_facial" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="1">Variedad insuficiente</option>
+                <option value="2">Variedad suficiente</option>
+            </select>
+        </div>
+
+        <!-- 76. Adaptabilidad de Expresión Facial -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                76. Adaptabilidad de expresión facial
+            </label>
+            <select name="adaptabilidad_expresion_facial" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="1">Sin capacidad de adaptar el movimiento</option>
+                <option value="2">Con capacidad de adaptar el movimiento</option>
+            </select>
+        </div>
+
+        <!-- 77. Babeo -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                77. Babeo
+            </label>
+            <select name="babeo" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="1">Babeo marcado</option>
+                <option value="2">Sin babeo o babeo escaso</option>
+            </select>
+        </div>
+
+        <!-- 78. Protrusión de Lengua -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                78. Presencia de protrusión estereotipada de lengua
+            </label>
+            <select name="protrusion_lengua" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="1">Sí</option>
+                <option value="2">No</option>
+            </select>
+        </div>
+
+        <!-- 79. Temblor -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                79. Temblor
+            </label>
+            <select name="temblor_general" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="1">Frecuentemente presente</option>
+                <option value="2">No presente o presente ocasionalmente</option>
+            </select>
+        </div>
+
+        <!-- 80. Fluidez del Comportamiento Motor -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                80. Fluidez del comportamiento motor
+            </label>
+            <select name="fluidez_comportamiento_motor" required class="w-full px-3 py-2 border rounded-lg">
+                <option value="">Seleccionar...</option>
+                <option value="1">No fluido: rígido, brusco, flácido/lento, otro</option>
+                <option value="2">Fluido</option>
+            </select>
+        </div>
+
+        <!-- Observaciones Adicionales -->
+        <div class="border p-4 rounded-lg">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                Observaciones Adicionales
+            </label>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-gray-600 text-sm mb-1">Cantidad de movimientos</label>
+                    <select name="cantidad_movimientos" class="w-full px-3 py-2 border rounded-lg">
+                        <option value="">Seleccionar...</option>
+                        <option value="+">+</option>
+                        <option value="++">++</option>
+                        <option value="+++">+++</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-gray-600 text-sm mb-1">Estado conductual</label>
+                    <input type="text" name="estado_conductual" class="w-full px-3 py-2 border rounded-lg">
+                </div>
+            </div>
+            <div class="mt-4">
+                <label class="block text-gray-600 text-sm mb-1">Estado de salud</label>
+                <textarea name="estado_salud" class="w-full px-3 py-2 border rounded-lg" rows="2"></textarea>
+            </div>
+            <div class="mt-4">
+                <label class="block text-gray-600 text-sm mb-1">Otras observaciones</label>
+                <textarea name="otras_observaciones" class="w-full px-3 py-2 border rounded-lg" rows="3"></textarea>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+            </div>
+        </section>
+
+
+
+        <!-- Botones de Acción -->
+        <div class="flex justify-between items-center mt-8">
+            <div>
+                <button type="button" id="downloadBlankForm"
+                        class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition-colors">
+                    Descargar Formulario en Blanco
+                </button>
+            </div>
+            <div class="space-x-4">
+                <button type="reset"
+                        class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition-colors">
+                    Limpiar
+                </button>
+                <button type="submit"
+                        class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                    Evaluar
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <!-- Sección de Resultados -->
+    <div id="results" class="hidden mt-8 bg-white shadow-lg rounded-lg p-6">
+        <h2 class="text-xl font-semibold mb-4 text-gray-700">Resultados de la Evaluación</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div class="p-4 bg-gray-50 rounded-lg">
+                <p class="font-bold mb-2">Puntuación Total</p>
+                <p id="totalScore" class="text-2xl text-blue-600"></p>
+            </div>
+            <div class="p-4 bg-gray-50 rounded-lg">
+                <p class="font-bold mb-2">Interpretación</p>
+                <p id="interpretation" class="text-gray-700"></p>
+            </div>
+        </div>
+        <button id="downloadResults"
+                class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition-colors">
+            Descargar Informe PDF
+        </button>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+$(document).ready(function() {
+    $('#impForm').on('submit', function(e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: '/evaluate',
+            method: 'POST',
+            data: $(this).serialize(),
+            success: function(response) {
+                $('#results').removeClass('hidden');
+                $('#totalScore').text(response.scores.total);
+                $('#interpretation').text(response.interpretation);
+            },
+            error: function(xhr) {
+                alert('Error: ' + xhr.responseJSON.error);
+            }
+        });
+    });
+
+    $('#downloadBlankForm').click(function() {
+        window.location.href = '/download_blank_form';
+    });
+
+    $('#downloadResults').click(function() {
+        $.ajax({
+            url: '/download_results',
+            method: 'POST',
+            data: $('#impForm').serialize(),
+            xhrFields: {
+                responseType: 'blob'
+            },
+            success: function(data) {
+                const blob = new Blob([data], { type: 'application/pdf' });
+                const link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = 'IMP_resultados.pdf';
+                link.click();
+            },
+            error: function(xhr) {
+                alert('Error generando el PDF');
+            }
+        });
+    });
+});
+</script>
+{% endblock %}
+
+{% endblock %}

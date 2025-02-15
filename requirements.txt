@@ -1,0 +1,23 @@
+# requirements.txt
+
+# Framework web y utilidades básicas
+Flask>=2.3.3
+Werkzeug>=2.3.7
+Jinja2>=3.1.2
+
+# Generación de PDF
+reportlab>=4.0.4
+
+# Dependencias científicas (versiones precompiladas para Windows)
+numpy>=1.24.3
+pandas>=2.0.3
+
+# Utilidades esenciales
+python-dateutil>=2.8.2
+pytz>=2023.3
+
+# Seguridad y formularios
+Flask-WTF>=1.1.1
+
+# Logging
+structlog>=23.1.0
