@@ -13,6 +13,14 @@ from visualization import IMPVisualizer
 import logging
 
 logger = logging.getLogger('imp.pdf_generator')
+COLORS = {
+    'background': colors.HexColor('#E3ECFC'),  # Azul claro pastel
+    'main': colors.HexColor('#4E73DF'),        # Azul principal vibrante
+    'fill': colors.HexColor('#AFC8F5'),        # Azul suave para relleno
+    'grid': colors.HexColor('#BFD3F2'),        # Azul grisáceo para la grilla
+    'text': colors.HexColor('#374151'),        # Gris oscuro para el texto
+    'highlight': colors.HexColor('#1E40AF')    # Azul profundo para detalles
+}
 
 
 class IMPReportGenerator:
@@ -57,9 +65,10 @@ class IMPReportGenerator:
 
         table = Table(basic_data, colWidths=[4 * inch, 4 * inch])
         table.setStyle(TableStyle([
-            ('GRID', (0, 0), (-1, -1), 0.5, colors.grey),
+            ('GRID', (0, 0), (-1, -1), 0.5, COLORS['grid']),  # Azul grisáceo en lugar de gris
             ('PADDING', (0, 0), (-1, -1), 4),
-            ('BACKGROUND', (0, 0), (-1, 0), colors.lightgrey),
+            ('BACKGROUND', (0, 0), (-1, 0), COLORS['fill']),  # Azul claro en lugar de lightgrey
+            ('TEXTCOLOR', (0, 0), (-1, -1), COLORS['text'])  # Texto en gris oscuro
         ]))
         story.append(table)
         story.append(Spacer(1, 20))
@@ -220,7 +229,7 @@ class IMPReportGenerator:
             def add_header_footer(canvas, doc):
                 canvas.saveState()
                 canvas.setFont('Helvetica', 8)
-                canvas.setFillColor(colors.gray)
+                canvas.setFillColor(COLORS['highlight'])  # Azul oscuro en vez de gris
                 canvas.drawString(72, A4[1] - 40, "Evaluación del Rendimiento Motor Infantil (IMP)")
                 page_num = canvas.getPageNumber()
                 canvas.drawString(A4[0] - 85, 30, f"Página {page_num}")
@@ -272,13 +281,12 @@ class IMPReportGenerator:
 
             type_table = Table(type_data, colWidths=[2 * inch, 1.5 * inch, 1.5 * inch, 1.5 * inch])
             type_table.setStyle(TableStyle([
-                ('GRID', (0, 0), (-1, -1), 0.5, colors.grey),
-                ('BACKGROUND', (0, 0), (-1, 0), colors.lightgrey),
-                ('BACKGROUND', (0, -1), (-1, -1), colors.lightgrey),
-                ('PADDING', (0, 0), (-1, -1), 6),
-                ('ALIGN', (1, 0), (-1, -1), 'CENTER'),
-                ('FONTWEIGHT', (0, -1), (-1, -1), 'BOLD'),
+                ('GRID', (0, 0), (-1, -1), 0.5, COLORS['grid']),  # Azul grisáceo en lugar de gris
+                ('PADDING', (0, 0), (-1, -1), 4),
+                ('BACKGROUND', (0, 0), (-1, 0), COLORS['fill']),  # Azul claro en lugar de lightgrey
+                ('TEXTCOLOR', (0, 0), (-1, -1), COLORS['text'])  # Texto en gris oscuro
             ]))
+
             story.append(type_table)
             story.append(Spacer(1, 20))
 
