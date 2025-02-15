@@ -175,11 +175,12 @@ class IMPVisualizer:
 
             # Paleta de colores modernizada
             COLORS = {
-                'main': colors.HexColor('#4e73df'),  # Azul principal
-                'fill': colors.HexColor('#4e73df22'),  # Azul muy transparente para el relleno
-                'grid': colors.HexColor('#eaecf4'),  # Gris muy claro para la grilla
-                'text': colors.HexColor('#5a5c69'),  # Gris oscuro para texto
-                'highlight': colors.HexColor('#2e59d9')  # Azul oscuro para detalles
+                'background': colors.HexColor('#E3ECFC'),  # Azul claro pastel para el fondo
+                'main': colors.HexColor('#4E73DF'),  # Azul principal vibrante
+                'fill': colors.HexColor('#AFC8F5'),  # Azul suave para relleno
+                'grid': colors.HexColor('#BFD3F2'),  # Azul grisáceo para la grilla
+                'text': colors.HexColor('#374151'),  # Gris oscuro para el texto
+                'highlight': colors.HexColor('#1E40AF')  # Azul profundo para detalles
             }
 
             # Configuración del gráfico
